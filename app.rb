@@ -28,11 +28,9 @@ class App < Sinatra::Base
 
     running_dir = File.dirname(__FILE__)
     running_dir = Dir.pwd if (running_dir == '.')
-    CSV.open(running_dir + '/public/sawada-progress.csv', 'wb'){|writer|
-      csv.each{|row|
-        writer << row
-      }
-    }
+    CSV.open(running_dir + '/public/sawada-progress.csv', 'wb') do |writer|
+      csv.each{ |row| writer << row }
+    end
   end
 
   get '/' do
