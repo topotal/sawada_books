@@ -1,0 +1,55 @@
+    <% @books.find.each do |book| %>
+      <div class="main-book-title">
+        <h2>
+          <%=
+            book['name']
+          %>
+        </h2>
+          <%=
+            book['term'].split(',').join(' 〜 ')
+          %>
+      </div>
+      <div class="row">
+         <div class="col-md-offset-2 col-md-4">
+           <a href="<%=book['url']%>" target="_blank">
+             <img src="images/<%=book['image']%>" class="img-responsive img-polaroid img-top-book" alt="No Image">
+           </a>
+         </div>
+         <div class="col-md-5">
+           <blockquote>
+             <small>
+               <%=
+                 book['description']
+               %>
+            </small>
+           </blockquote>
+         </div>
+      </div>
+      <div class="row impressions">
+        <div class="col-md-8 col-md-offset-2">
+          <table class="table table-striped">
+            <% @comments.find.select{|c| c['book'] == book['name']}.each { |comment| %>
+            <tr data-id="<%= comment["_id"]%>">
+              <td>
+                <%= h comment["body"] %>
+              </td>
+              <td>
+              	<small class="comment-date">
+              	  <%= h comment['date'] %>
+              	</small>
+              </td>
+              <td>
+                <span class="thumbsup" style="cursor:pointer;">
+                  <i class="fa fa-thumbs-up"></i>
+                  <span class="thumbsup-count">
+                    <%= h comment["thumbsup"].to_i %>
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <% } %>
+          </table>
+        </div>
+      </div>
+      <hr>
+    <% end %>
